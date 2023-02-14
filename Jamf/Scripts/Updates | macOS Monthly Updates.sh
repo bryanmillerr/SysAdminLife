@@ -1,17 +1,6 @@
 #!/bin/bash
 
 ###################################################################################
-###																				###
-###			This script is how push managed macOS updates to FacStf.			###
-###			It queries the jamf-patch libary for the available macOS versions,	###
-###			and sets the latest version to 'required' with a 30 days as time.	###
-###																				###
-###											Calvin University | 2023			###
-###																				###
-###################################################################################
-
-
-###################################################################################
 ## Declare Variables
 ###################################################################################
 json="/usr/local/nudge/nudge.json"
