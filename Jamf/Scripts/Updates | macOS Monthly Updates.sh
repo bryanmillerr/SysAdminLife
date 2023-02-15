@@ -1,26 +1,26 @@
 #!/bin/bash
 
-###################################################################################
-###																				###
-###			This script is how push managed macOS updates to FacStf.			###
+###################################################################################################
+###												###
+###			This script is how push managed macOS updates to FacStf.		###
 ###			It queries the jamf-patch libary for the available macOS versions,	###
 ###			and sets the latest version to 'required' with a 30 days as time.	###
-###																				###
+###												###
 ###			Much of the configuration is done via Jamf policy variables. The	###
-###			variables are defined like this:									###
-###																				###
-###			$4 = Simple Mode (true/false)										###
-###			$5 = Allow Custom Deferral Options (true/false)						###
-###			$6 = Show Deferrals (true/false)									###
-###			$7 = Allowed Deferrals (specify number. Default: unlimited)			###
+###			variables are defined like this:					###
+###												###
+###			$4 = Simple Mode (true/false)						###
+###			$5 = Allow Custom Deferral Options (true/false)				###
+###			$6 = Show Deferrals (true/false)					###
+###			$7 = Allowed Deferrals (specify number. Default: unlimited)		###
 ###			$8 = Secondary Deferral minimum (specify a number. Default: 20)		###
-###			$9 = Initial Refresh Cycle (specify a number in seconds)			###
+###			$9 = Initial Refresh Cycle (specify a number in seconds)		###
 ###			$10 = Approaching Refresh Cycle (specify a number in seconds)		###
-###			$11 = Imminent Refresh Cycle (specify a number in seconds)			###
-###																				###
-###													Bryan Miller | 2023			###
-###																				###
-###################################################################################
+###			$11 = Imminent Refresh Cycle (specify a number in seconds)		###
+###												###
+###							Bryan Miller | 2023			###
+###												###
+###################################################################################################
 
 ###################################################################################
 ## Declare Variables (please make sure these are correct for your environment)
