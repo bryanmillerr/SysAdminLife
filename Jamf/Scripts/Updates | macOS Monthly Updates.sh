@@ -2,10 +2,6 @@
 
 ###################################################################################################
 ###												###
-###			This script is how push managed macOS updates to FacStf.		###
-###			It queries the jamf-patch libary for the available macOS versions,	###
-###			and sets the latest version to 'required' with a 30 days as time.	###
-###												###
 ###			Much of the configuration is done via Jamf policy variables. The	###
 ###			variables are defined like this:					###
 ###												###
