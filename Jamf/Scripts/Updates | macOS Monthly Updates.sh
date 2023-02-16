@@ -1,44 +1,44 @@
 #!/bin/bash
 
-###################################################################################
-###																				###
+###################################################################################################
+###												###
 ###			Essentially, this script queries the jamf-patch libary to see the 	###
 ###			available macOS versions, and then sets the latest minor version 	###
 ###			for each major version of macOS (11,12,13) 'required' with X amount	###
-###			of days as required installation date.								###
-###																				###
+###			of days as required installation date.					###
+###												###
 ###			Designed to use with Jamf Pro and Nudge. The best way to implement	###
-###			this to your environment is to do the following:					###
+###			this to your environment is to do the following:			###
 ###			1. Get familiar with Nudge (https://github.com/macadmins/nudge)		###
 ###			2. Setup an AutoPKGr recipe to upload the latest Nudge version 		###
 ###			   every month or so. Link that recipe to a policy that runs		###
-###			   after enrollment of the device (aka OSD).						###
-###			3. Customize this script to match your environment.					###
+###			   after enrollment of the device (aka OSD).				###
+###			3. Customize this script to match your environment.			###
 ###			4. Link this script to a policy that runs once at the interval		###
-###			   of your choosing. I like running it once a month.				###
+###			   of your choosing. I like running it once a month.			###
 ###			5. The policy should install the latest executable every month,		###
-###			   and then set the required version of macOS to the latest			###
-###			   version available at the time of execution.						###
-###																				###
-###					Logs to console at UpdateUtility.log						###
-###																				###
+###			   and then set the required version of macOS to the latest		###
+###			   version available at the time of execution.				###
+###												###
+###					Logs to console at UpdateUtility.log			###
+###												###
 ###			Much of the configuration is done via Jamf policy variables.		###
 ###			Use the script settings in your Jamf policy to customize these		###
 ###			variables. They all have default settings, if you don't feel		###
-###			like that.															###
-###																				###
-###			$4 = Simple Mode (true/false)										###
-###			$5 = Allow Custom Deferral Options (true/false)						###
-###			$6 = Show Deferrals (true/false)									###
-###			$7 = Allowed Deferrals (specify number. Default: unlimited)			###
+###			like that.								###
+###												###
+###			$4 = Simple Mode (true/false)						###
+###			$5 = Allow Custom Deferral Options (true/false)				###
+###			$6 = Show Deferrals (true/false)					###
+###			$7 = Allowed Deferrals (specify number. Default: unlimited)		###
 ###			$8 = Secondary Deferral minimum (specify a number. Default: 20)		###
-###			$9 = Initial Refresh Cycle (specify a number in seconds)			###
+###			$9 = Initial Refresh Cycle (specify a number in seconds)		###
 ###			$10 = Approaching Refresh Cycle (specify a number in seconds)		###
-###			$11 = Imminent Refresh Cycle (specify a number in seconds)			###
-###																				###
-###													@bryanmillerr | 2023		###
-###																				###
-###################################################################################
+###			$11 = Imminent Refresh Cycle (specify a number in seconds)		###
+###												###
+###								@bryanmillerr | 2023		###
+###												###
+###################################################################################################
 ## Log location (for debugging)
 log="/var/log/UpdateUtility.log"
 date=$(date)
