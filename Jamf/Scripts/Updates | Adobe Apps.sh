@@ -10,7 +10,7 @@
 ###             $5 - Applications (seperated by comma). Use "all" to update all ###
 ###                                                                             ###
 ###                                                                             ###
-###													@bryanmillerr | 2023                                ###
+###							@bryanmillerr | 2023	###
 ###                                                                             ###
 ###################################################################################
 
