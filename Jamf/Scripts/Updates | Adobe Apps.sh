@@ -5,60 +5,74 @@
 ###                                                                             ###
 ###         It updates all available Adobe apps on the device.                  ###
 ###                                                                             ###
-###         Jamf policy variable $4 defines whether you want to "install" or    ###
-###         "download the updates."                                             ###
+###         The two Jamf policy variables are the following:                    ###
+###             $4 - Action (install/download)                                  ###
+###             $5 - Applications (seperated by comma). Use "all" to update all ###
 ###                                                                             ###
 ###                                                                             ###
-###													                            @bryanmillerr | 2023		###
-###																				                                      ###
+###													@bryanmillerr | 2023                                ###
+###                                                                             ###
 ###################################################################################
 
+## Customization \ refer to https://helpx.adobe.com/enterprise/kb/apps-deployed-without-base-versions.html
+log="/var/log/AdobeUpdates.log" ## Customize debug log location
 
 ###################################################################################
-## Declare functions
+function startLogging {
+  exec 3>&1 1>>$log 2>&1 ##	Write to log
+  sudo touch $log
+  sudo chmod 755 $log
+  echo ""
+  echo "###################################################################################"
+  echo ""
+  echo "Execution time: $date"
+}
+
+###################################################################################
+## Variables
 ###################################################################################
 function declareVariables {
   adobeRUM="/usr/local/bin/RemoteUpdateManager"
-  adobeCC="/Applications/Adobe Creative Cloud/Adobe Creative Cloud"
+  adobeCC="/Applications/Utilities/Adobe Creative Cloud/Utils/Creative Cloud Desktop App.app"
   date=$(date)
-  log="/var/log/AdobeUpdates.log"
-
-  # Jamf Variable
-  if [[ $4 == 'install' ]]; then
+  if [[ $4 == 'install' ]]; then ## Jamf variable to install
     action="--action=install"
-  elif [[ $4 == 'download' ]]; then
+  else
     action="--action=download"
-  else
-    echo "No action specified. Exiting..."
-    exit 1
   fi
 
-  ## Make the Jamf log look pretty <3
-	sudo touch $log
-	sudo chmod 755 $log
-  echo ""
-	echo "###################################################################################"
-	echo ""
-	echo "Execution time: $date"
+  if [[ $5 == 'all' ]]; then ## Jamf variable for apps
+    selectedApps=""
+  else
+    selectedApps="$5"
+  fi
+
+  if [[ $selectedApps == "" ]]; then ## Logic for selectedApps
+    installArgument="$action"
+  else
+    installArgument="$action $selectedApps"
+  fi
+  
 }
 
+###################################################################################
+## Pre-requisite check
+###################################################################################
 function preRunCheck {
-  ## Check for Adobe installation
-  if [[ -f $adobeCC ]]; then
-    echo "Adobe CC installation verified. Continuing..."
+  if [[ -e $adobeCC ]]; then   ## Check for Adobe installation
+    echo "Adobe CC installation verified. Continuing..." 1>&3
   else
-    echo "Adobe CC not installed! Exiting..."
+    echo "Adobe CC not installed! Exiting..." 1>&3
 		## Send logs to Jamf
 		jamfLog=$(sed -ne "/$date/,$ p" $log)
 		echo "$jamfLog" 1>&3
 		exit 1
   fi
 
-  ## Check for Adobe RUM installation
-  if [[ -f $adobeRUM ]]; then
-    echo "Starting Adobe RemoteUpdateManger..."
+  if [[ -f $adobeRUM ]]; then   ## Check for Adobe RUM installation
+    echo "Starting Adobe RemoteUpdateManger..." 1>&3
   else
-    echo "Adobe RemoteUpdateManager not found."
+    echo "Adobe RemoteUpdateManager not found." 1>&3
 		## Send logs to Jamf
 		jamfLog=$(sed -ne "/$date/,$ p" $log)
 		echo "$jamfLog" 1>&3
@@ -66,24 +80,21 @@ function preRunCheck {
   fi
 }
 
+###################################################################################
 function updateAdobeApps {
-  $adobeRUM $action
-  exitCode="0"
+  $adobeRUM $arguments
+}
+
+function finishUp {
+  jamfLog=$(sed -ne "/$date/,$ p" $log) ## Send Jamf some logs
+  echo "$jamfLog" 1>&3
 }
 
 ###################################################################################
-## Finish Up
-###################################################################################
-##	Write to log
-exec 3>&1 1>>$log 2>&1
-
-## Do the functions
+startLogging
 declareVariables
 preRunCheck
 updateAdobeApps
+finishUp
 
-## Send Jamf some logs
-jamfLog=$(sed -ne "/$date/,$ p" $log)
-echo "$jamfLog" 1>&3
-
-exit $exitCode
+exit 0
