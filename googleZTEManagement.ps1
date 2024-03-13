@@ -8,8 +8,7 @@
 ##                  2. Calls Android Provisioning API to apply a different "assignment"
 ##                  3. Deletes (wipes) the device to allow end-users to go through the ZTE setup process
 ##
-##          Maybe one day I'll make a gui for this, but for now- this will work. Not very comfortable with
-##          this code being shared.
+##          Maybe one day I'll make a gui for this, but for now- this will work.
 ##
 ##          To-Do:
 ##                  1. Better token usage
