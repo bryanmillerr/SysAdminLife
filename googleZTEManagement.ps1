@@ -1,5 +1,4 @@
 ###############################################################################################################
-## Bryan Miller | 2024
 ##
 ##  Notes:
 ##           A lot going on with this one.
@@ -16,6 +15,7 @@
 ##                  1. Better token usage
 ##                  2. Guify
 ##
+##                                                                                        @bryanmillerr | 2024
 ###############################################################################################################
 ## Version Number
 $versionNumber = "1.2"
@@ -46,7 +46,7 @@ Import-Module -Name Microsoft.Graph.Beta.DeviceManagement.Actions -Force
 Clear-host
 Write-host "Android Zero-Touch Management Tool v$versionNumber" -ForegroundColor Green
 Write-Host "Patch Notes: $patchNotes"
-Write-Host "Created by UFP Industries, 2024" -ForegroundColor Green
+Write-Host "Created by @bryanmiller, 2024" -ForegroundColor Green
 Write-Host ""
 Write-host "Important: Activate PIM Role for your account before using this tool." -ForegroundColor Yellow
 Write-Host ""
