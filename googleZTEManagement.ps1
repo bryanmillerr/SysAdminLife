@@ -278,7 +278,6 @@ try {
     exitScript
 }
 
-## My cat, Nova, says meeeww
 ## Gather device serial number
 $input = Read-Host "Please input a device number (Example: '1')"
 $input = $input -replace '(^\s+|\s+$)','' -replace '\s+',' '
@@ -350,8 +349,6 @@ try { ## Retrieve Configs
     Write-Host "Failed to parse Zero touch configurations" -ForegroundColor Red
     exitScript
 }
-
-## My cat, Simon, says mew
 
 ## Re-assign device workflow
 try {
@@ -676,42 +673,6 @@ $jsonBody = @"
     Invoke-RestMethod -Headers @{Authorization = "Bearer $AuthToken"} -Uri "$requestUri" -Method POST -Body "$jsonBody" -ContentType 'application/json'
     Write-Host "Successfully assigned the "$configSelected[2]" configuration to: $deviceSerialFinal" -Foreground Green
     Write-Host ""
-
-## If it is fleet mgmt, assign it to a BA
-if ($fleetMgmt -notlike $NULL) {
-    do {
-        $fleetManage = Read-Host "This device is assigned to AMR fleet management. Would you like to assign it to a plant? (Y/N)"
-    } until (($fleetManage -like "*Y*") -or ($fleetManage -like "*N*"))
-    if ( $fleetManage -like "*Y*" ) {
-        $plantNumber = Read-Host "Please enter a plant number"
-        try {
-            # Get Group
-            $groupInfo = Get-AADGroup -Filter "displayname eq '$amrGroupName-$plantNumber'"
-            $groupId = $groupInfo.GroupId
-        } catch {
-            write-host "Failed to enumerate plant group"
-            exitScript
-        }
-
-        try {
-            ## Get device info
-            write-host "Device is: $deviceEntraIDFinal"
-            $device = Get-AzureADDevice -ObjectId $deviceEntraIDFinal
-        } catch {
-            Write-Host "Failed to retreive device Id"
-            exitScript
-        }
-
-        try {
-            Add-AzureADGroupMember -ObjectId $groupInfo.GroupId -RefObjectId $device.ObjectId
-        } catch {
-            write-host "Failed to add device ($deviceEntraIDFinal) to group $groupInfo.GroupId"
-            exitScript
-        }
-    } else {
-        Write-Host "Note: This device will need to be assigned to a plant number before it is useable." -ForegroundColor Red
-    }
-}
 
     do {
         $renameDevice = Read-Host "Would you like to rename this device ($deviceSerialFinal) (Y/N)?"
