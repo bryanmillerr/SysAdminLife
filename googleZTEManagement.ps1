@@ -253,10 +253,6 @@ try {
                     $deviceZTEStatus = "Unauthorized"
                     Write-Host "Zero-touch Configuration: $matchingConfig" -ForeGroundColor Green
                     $deviceZTEStatus = "Unauthorized"
-                } elseif ($matchingConfig -like "*AMR*") {
-                    Write-Host "Zero-touch Configuration: $matchingConfig" -ForeGroundColor Red
-                    $deviceZTEStatus = "Yes"
-                    $fleetMgmt = "Yes"
                 } else {
                     Write-Host "Zero-touch Configuration: $matchingConfig" -ForeGroundColor Red
                     $deviceZTEStatus = "Yes"
@@ -522,10 +518,6 @@ try {
                     $deviceZTEStatus = "Unauthorized"
                     Write-Host "Zero-touch Configuration: $matchingConfig" -ForeGroundColor Green
                     $deviceZTEStatus = "Unauthorized"
-                } elseif ($matchingConfig -like "*AMR*") {
-                    Write-Host "Zero-touch Configuration: $matchingConfig" -ForeGroundColor Red
-                    $deviceZTEStatus = "Yes"
-                    $fleetMgmt = "Yes"
                 } else {
                     Write-Host "Zero-touch Configuration: $matchingConfig" -ForeGroundColor Red
                     $deviceZTEStatus = "Yes"
